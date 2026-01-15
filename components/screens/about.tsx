@@ -1,4 +1,4 @@
-import { aboutMeData } from "@/lib/constants/about-constants";
+import { aboutMeData } from "@/lib/constants/about.constants";
 import { Category, File as FileType } from "@/types/about-types";
 import {
   ChevronDown,
@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Welcome from "../welcome";
 import DisplayContents from "../displayContents";
+import CodeSnippet from "../codeSnippet";
 
 export default function About() {
   const [selectedCategory, setSelectedCategory] = useState<Category>(
@@ -97,9 +98,10 @@ export default function About() {
                   </div>
                 </div>
               ) : (
-                <div 
+                <div
                   onClick={() => setSelectedFile(detail)}
-                className="cursor-pointer py-2 px-5 flex items-center gap-2">
+                  className="cursor-pointer py-2 px-5 flex items-center gap-2"
+                >
                   <File className="w-[16px]" />
                   {detail.name}
                 </div>
@@ -130,7 +132,11 @@ export default function About() {
         {selectedFile && (
           <div className="w-[259px] h-max px-5 border-r py-4 border-themeStroke ">
             <div className="flex items-center justify-between">
-              {selectedFile.name} <X onClick={()=> setSelectedFile(null)} className="cursor-pointer w-[16px]" />
+              {selectedFile.name}{" "}
+              <X
+                onClick={() => setSelectedFile(null)}
+                className="cursor-pointer w-[16px]"
+              />
             </div>
           </div>
         )}
@@ -140,21 +146,18 @@ export default function About() {
             <DisplayContents contents={selectedFile.content!} />
           ) : (
             <div className="w-4/5 h-full border-r border-themeStroke">
-             <Welcome title={selectedCategory.name} />
+              <Welcome title={selectedCategory.name} />
             </div>
           )}
 
           {/* Code snippet showcase */}
           <div
-            className={` px-8 py-4 w-3/5 h-full  border-r border-themeStroke ${
+            className={` px-8 py-4 w-3/5 h-full overflow-hidden  border-r border-themeStroke ${
               selectedFile && "border-t"
             }`}
           >
-            <div className="flex">
-              <pre className="whitespace-pre-wrap">
-                {`// Code snippet showcase:`}
-              </pre>
-            </div>
+            {" "}
+            <CodeSnippet />
           </div>
 
           <div className="h-full border-t border-r w-[32px] border-themeStroke p-2 pt-4">

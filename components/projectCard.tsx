@@ -20,22 +20,22 @@ export default function ProjectCard({
   icon,
 }: ProjectCardProps) {
   return (
-    <div>
+    <div className="flex flex-col justify-end h-full">
       <p className="mb-4">
         <span className="text-indigo-500">Project {projectNumber}</span> //{" "}
         {title}
       </p>
-      <div className="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden flex-1 flex flex-col">
         {/* Image Section */}
-        <div className="relative w-full h-28">
-          <Image src={imageSrc} alt={title} fill className="object-cover" />
-          <div className="absolute top-4 right-4 text-slate-900 p-2 rounded-md flex items-center justify-center w-[28px] h-[28px] bg-teal-300">
+        <div className="relative w-full h-36">
+           <div className="absolute top-4 right-4 text-slate-900 p-2 rounded-md flex items-center justify-center w-[28px] h-[28px] bg-teal-300">
             {icon}
           </div>
+          <Image src={imageSrc} alt={title} fill className="object-cover" />
         </div>
 
         {/* Content */}
-        <div className="p-[32px] flex flex-col gap-3 border-t border-t-slate-800">
+        <div className="p-[32px] flex flex-col gap-3 border-t border-t-slate-800 justify-between flex-1">
           <p className="text-[#c0c0d0] text-[18px]">{description}</p>
 
           <button

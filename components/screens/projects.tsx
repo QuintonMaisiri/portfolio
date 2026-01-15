@@ -1,57 +1,32 @@
-import { ChevronDown, ChevronRight, File, Folder, X } from "lucide-react";
+import {  File, X } from "lucide-react";
 import Image from "next/image";
-import ProjectCard from "./projectCard";
-import {
-  RiAngularjsFill,
-  RiCss3Fill,
-  RiFlutterFill,
-  RiHtml5Fill,
-  RiNextjsFill,
-  RiTailwindCssFill,
-} from "react-icons/ri";
-import { useState } from "react";
-import { SiNestjs } from "react-icons/si";
-
-const frameworks = [
-  {
-    name: "Next.js",
-    icon: <RiNextjsFill size={24} />,
-  },
-  {
-    name: "Angular",
-    icon: <RiAngularjsFill size={24} />,
-  },
-  {
-    name: "Flutter",
-    icon: <RiFlutterFill size={24} />,
-  },
-  {
-    name: "Tailwind CSS",
-    icon: <RiTailwindCssFill />,
-  },
-  {
-    name: "HTML 5",
-    icon: <RiHtml5Fill />,
-  },
-  {
-    name: "CSS 3",
-    icon: <RiCss3Fill />,
-  },
-  {
-    name: "Nest.js",
-    icon: <SiNestjs />,
-  },
-];
+import ProjectCard from "../projectCard";
+import { useEffect, useState } from "react";
+import { frameworks, projects } from "@/lib/constants/project.constants";
+import { Project } from "@/types/project.types";
 
 export default function Projects() {
   const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
-  const [projects, setProjects] = useState<any[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
 
   const handleCheckboxChange = (name: string) => {
     setSelectedFrameworks((prev) =>
       prev.includes(name) ? prev.filter((f) => f !== name) : [...prev, name]
     );
   };
+
+  useEffect(() => {
+    if (selectedFrameworks.length === 0) {
+      setFilteredProjects(projects);
+    } else {
+      const filtered = projects.filter((project) =>
+        project.framework.some((fw) => selectedFrameworks.includes(fw))
+      );
+      setFilteredProjects(filtered);
+    }
+  }, [selectedFrameworks]);
+
+
   return (
     <div className="w-full h-full flex">
       {/* Nav section */}
@@ -107,41 +82,34 @@ export default function Projects() {
       </div>
 
       {/* Displayed Content */}
-      <div className="h-full flex flex-col flex-1">
+      <div className="h-full flex flex-col flex-1 overflow-hidden">
         {/* Open file name container */}
-        <div className="w-[259px] h-max px-5 border-r py-4 border-themeStroke ">
-          <div className="flex items-center justify-between">
-            React <X className="w-[16px]" />
+       
+         {selectedFrameworks.length > 0 &&
+          <div className="min-w-[259px] w-max h-max px-5 border-r py-4 border-themeStroke">
+           <div className="flex items-center justify-between">
+            {selectedFrameworks.map((framework) => `${framework}, ` ) }<X className="w-[16px] ml-10 cursor-pointer" onClick={()=> setSelectedFrameworks([])}/>
           </div>
-        </div>
+           </div>
+         }
+       
         {/* Open file content */}
         <div className="h-full flex w-full ">
-          <div className=" p-10 flex-1 h-full border-t border-r border-themeStroke">
+          <div className=" p-10 flex-1 h- border-t border-r border-themeStroke overflow-y-scroll gutter-scrollbar">
             <div className="grid grid-cols-3 gap-7">
-              <ProjectCard
-                title="_ui-animations"
-                projectNumber="1"
-                description="Duis aute irure dolor in velit esse cillum dolore."
-                imageSrc="/images/terminal.png"
-                icon={<RiNextjsFill size={24} />}
-                onViewProject={() => console.log("View project clicked")}
-              />
-              <ProjectCard
-                title="_ui-animations"
-                projectNumber="1"
-                description="Duis aute irure dolor in velit esse cillum dolore."
-                imageSrc="/images/terminal.png"
-                icon={<RiNextjsFill size={24} />}
-                onViewProject={() => console.log("View project clicked")}
-              />
-              <ProjectCard
-                title="_ui-animations"
-                projectNumber="1"
-                description="Duis aute irure dolor in velit esse cillum dolore."
-                imageSrc="/images/terminal.png"
-                icon={<RiNextjsFill size={24} />}
-                onViewProject={() => console.log("View project clicked")}
-              />
+              {
+                filteredProjects.map((project, index) => (
+                  <ProjectCard
+                    key={index}
+                    title={`_${project.name}`}
+                    projectNumber={(index + 1).toString()}
+                    description={project.description}
+                    imageSrc={project.imageUrl}
+                    icon={frameworks.find(fw => fw.name === project.framework[0])?.icon || <File size={24} />}
+                    onViewProject={() => window.open(project.link, "_blank")}
+                  />
+                ))
+              }
             </div>
           </div>
           {/* Scroll bar */}

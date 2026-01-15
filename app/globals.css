@@ -43,16 +43,36 @@ h6{
   line-height: 150%;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+/* WebKit browsers */
+.gutter-scrollbar::-webkit-scrollbar {
+  width: 14px; /* gutter width */
 }
-::-webkit-scrollbar-thumb {
+
+.gutter-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gutter-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #1e293b;
+  width: 6px;              /* thumb width */
+  margin: 4px auto;        /* centers thumb horizontally */
+  border-radius: 2px;      /* rectangular, not pill */
+}
+
+.gutter-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #334155;
-  border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background-color: #475569;
+
+.gutter-scrollbar::-webkit-scrollbar-thumb {
+  min-height: 24px;
 }
+
+/* Firefox */
+.gutter-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #1e293b transparent;
+}
+
 
 @theme{
   --color-themeBackdrop: #020618;
