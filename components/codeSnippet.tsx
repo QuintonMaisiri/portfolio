@@ -1,8 +1,14 @@
+'use client';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Image from "next/image";
+import {useMediaQuery} from 'react-responsive';
 
 export default function CodeSnippet() {
+
+  
+const ismobile = useMediaQuery({ query: '(max-width: 768px)' });
+const isSmallScreen = useMediaQuery({ query: '(max-width: 1024px)' });
 
   const snippets = [
     {
@@ -47,8 +53,8 @@ export default function CodeSnippet() {
   ];
 
   return (
-    <div className="overflow-y-scroll h-full gutter-scrollbar">
-      <p className="text-[18px]"> // Code snippet showcase:</p>
+    <div className="overflow-y-scroll h-full no-scrollbar w-full">
+      <p className="text-[18px] mt-4"> // Code snippet showcase:</p>
       <div className="space-y-8 mt-8">
         {snippets.map((snippet, index) => (
           <div className="space-y-4">
@@ -72,7 +78,7 @@ export default function CodeSnippet() {
               style={oneDark}
               customStyle={{
                 padding: "1.25rem",
-                fontSize: "0.875rem",
+                fontSize: isSmallScreen ? "0.7rem" : "0.875rem",
                 lineHeight: "1.6",
                 background: "#020617",
                 borderRadius: "16px",

@@ -6,9 +6,9 @@ type WelcomeProps = {
 };
 export default function Welcome({ title }: WelcomeProps) {
   return (
-    <div className="w-full h-full p-20 space-y-8">
+    <div className="h-full p-6 xl:p-20 space-y-8">
       <div>
-        <h2>{title}</h2>
+        <h2 className="text-[3rempx]">{title}</h2>
         <p>My portfolio</p>
       </div>
 
@@ -19,7 +19,7 @@ export default function Welcome({ title }: WelcomeProps) {
             <FileSearch className="w-[16px] mr-4" />
             Use the tabs on the left to learn more about me.
           </div>
-          <Link href="/contact">
+          <Link href="/contact_me">
             <div className="flex text-purple-400">
               <Mail className="w-[16px] mr-4" />
               Send me an email

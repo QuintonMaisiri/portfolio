@@ -32,10 +32,10 @@ export default function About() {
   };
 
   return (
-    <div className="w-full h-full flex">
+    <div className="h-full w-full flex">
       {/* Nav section */}
-      <div className="flex w-[312px] border-r border-themeStroke">
-        <div className="h-full border-r border-themeStroke py-4 pl-4 pr-5">
+      <div className="flex w-[286px] xl:w-[312px] border-r border-themeStroke">
+        <div className="h-full w-max p-2 border-r border-themeStroke xl:py-4 xl:pl-4 xl:pr-5">
           <div className="flex flex-col gap-5">
             {aboutMeData.categories.map((c, index) => (
               <Image
@@ -53,7 +53,7 @@ export default function About() {
           </div>
         </div>
         <div className="h-full w-full ">
-          <div className="px-5 py-4 flex items-center gap-2 border-b border-themeStroke mb-4">
+          <div className="p-2 xl:px-5 xl:py-4 flex items-center gap-2 border-b border-themeStroke mb-4">
             <Image
               src="/images/chevronDown.png"
               alt="chevron down"
@@ -63,7 +63,7 @@ export default function About() {
             {selectedCategory.name}
           </div>
           {selectedCategory.details.map((detail, index) => (
-            <div key={index} className="px-5 flex items-center gap-2">
+            <div key={index} className="xl:px-5 flex items-center gap-2">
               {typeof detail === "object" && "files" in detail ? (
                 <div>
                   <div
@@ -108,7 +108,7 @@ export default function About() {
               )}
             </div>
           ))}
-          <div className="px-5 py-4 flex items-center gap-2 border-b border-t border-themeStroke my-4">
+          <div className="p-2 xl:px-5 xl:py-4 flex items-center gap-2 border-b border-t border-themeStroke my-4">
             <Image
               src="/images/chevronDown.png"
               alt="chevron down"
@@ -127,10 +127,10 @@ export default function About() {
       </div>
 
       {/* Displayed Content */}
-      <div className="h-full flex flex-col flex-1">
+      <div className="flex flex-col xl:flex-1">
         {/* Open file name container */}
         {selectedFile && (
-          <div className="w-[259px] h-max px-5 border-r py-4 border-themeStroke ">
+          <div className="w-[259px] h-max p-1 xl:px-5 border-r xl:py-4 border-themeStroke ">
             <div className="flex items-center justify-between">
               {selectedFile.name}{" "}
               <X
@@ -141,18 +141,18 @@ export default function About() {
           </div>
         )}
         {/* Open file content */}
-        <div className="h-full flex w-full">
+        <div className="h-full flex overflow-hidden">
           {selectedFile ? (
             <DisplayContents contents={selectedFile.content!} />
           ) : (
-            <div className="w-4/5 h-full border-r border-themeStroke">
+            <div className="w-1/2 xl:w-4/5 border-r border-themeStroke">
               <Welcome title={selectedCategory.name} />
             </div>
           )}
 
           {/* Code snippet showcase */}
           <div
-            className={` px-8 py-4 w-3/5 h-full overflow-hidden  border-r border-themeStroke ${
+            className={`p-4 xl:px-8 xl:py-4 xl:w-3/5 overflow-hidden  border-r border-themeStroke ${
               selectedFile && "border-t"
             }`}
           >
@@ -160,7 +160,7 @@ export default function About() {
             <CodeSnippet />
           </div>
 
-          <div className="h-full border-t border-r w-[32px] border-themeStroke p-2 pt-4">
+          <div className="h-full border-t border-r w-[20px] xl:w-[32px] border-themeStroke p-2 pt-4">
             <div className="bg-themeStroke w-full h-2 mx-auto"></div>
           </div>
         </div>

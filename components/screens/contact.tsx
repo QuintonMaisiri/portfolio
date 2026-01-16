@@ -35,9 +35,9 @@ export default function Contact() {
   return (
     <div className="w-full h-full flex">
       {/* Nav section */}
-      <div className="flex w-[312px] border-r border-themeStroke">
+      <div className="flex w-[286px] xl:w-[312px] border-r border-themeStroke">
         <div className="h-full w-full ">
-          <div className="px-7 py-4 flex items-center gap-2 border-b border-themeStroke mb-2">
+          <div className="px-7 py-4 flex items-center gap-2 border-b border-themeStroke mb-2 w-[286px] xl:w-[312px]">
             <Image
               src="/images/chevronDown.png"
               alt="chevron down"
@@ -64,8 +64,8 @@ export default function Contact() {
           </div>
         </div>
         {/* Open file content */}
-        <div className="h-full flex w-full">
-          <div className=" px-8 py-4 w-2/5 h-full border-t border-r border-themeStroke">
+        <div className="h-full w-full flex">
+          <div className="w-1/3 p-4 xl:px-8 xl:py-4 xl:w-2/5 h-full border-t border-r border-themeStroke">
             <div className="flex items-center justify-center h-full w-full">
               {sent ? (
                 <ThankYou />
@@ -111,7 +111,7 @@ export default function Contact() {
           </div>
 
           {/* Code snippet showcase */}
-          <div className=" px-8 py-4 w-3/5 h-full border-t border-r border-themeStroke">
+          <div className="flex-1 p-4 xl:px-8 xl:py-4 xl:w-3/5 h-full border-t border-r border-themeStroke overflow-x-scroll ">
             <div className="flex">
               {/* Line numbers */}
               <div className="text-[#64748b] text-right pr-6 select-none">
@@ -120,8 +120,8 @@ export default function Contact() {
                 ))}
               </div>
 
-              <div>
-                <pre>
+              <div className="">
+                <pre >
                   <code>
                     <Purple text="const " />
                     <Indigo text="button " />
@@ -184,7 +184,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="h-full border-t border-r w-[32px] border-themeStroke p-2 pt-4">
+          <div className="h-full border-t border-r w-[20px] xl:w-[32px] border-themeStroke p-2 pt-4">
             <div className="bg-themeStroke w-full h-2 mx-auto"></div>
           </div>
         </div>

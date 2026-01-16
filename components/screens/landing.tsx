@@ -28,7 +28,7 @@ export default function Landing() {
 };
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full px-6">
       <div className="space-y-10 w-[500px]">
         <div className="space-y-4">
           <p>Hi all. I am</p>

@@ -1,4 +1,4 @@
-import {  File, X } from "lucide-react";
+import { File, X } from "lucide-react";
 import Image from "next/image";
 import ProjectCard from "../projectCard";
 import { useEffect, useState } from "react";
@@ -26,13 +26,12 @@ export default function Projects() {
     }
   }, [selectedFrameworks]);
 
-
   return (
     <div className="w-full h-full flex">
       {/* Nav section */}
-      <div className="flex w-[312px] border-r border-themeStroke">
+      <div className="flex w-[286px] xl:w-[312px] border-r border-themeStroke">
         <div className="h-full w-full ">
-          <div className="px-5 py-4 flex items-center gap-2 border-b border-themeStroke">
+          <div className="p-4 xl:px-5 xl:py-4 flex items-center gap-2 border-b border-themeStroke">
             <Image
               src="/images/chevronDown.png"
               alt="chevron down"
@@ -41,7 +40,7 @@ export default function Projects() {
             />
             projects
           </div>
-          <div className="px-5 py-4 space-y-3">
+          <div className="p-4 xl:px-5 xl:py-4 space-y-3">
             {frameworks.map((fw) => (
               <label key={fw.name} className="flex items-center gap-4">
                 <input
@@ -84,32 +83,37 @@ export default function Projects() {
       {/* Displayed Content */}
       <div className="h-full flex flex-col flex-1 overflow-hidden">
         {/* Open file name container */}
-       
-         {selectedFrameworks.length > 0 &&
-          <div className="min-w-[259px] w-max h-max px-5 border-r py-4 border-themeStroke">
-           <div className="flex items-center justify-between">
-            {selectedFrameworks.map((framework) => `${framework}, ` ) }<X className="w-[16px] ml-10 cursor-pointer" onClick={()=> setSelectedFrameworks([])}/>
+
+        {selectedFrameworks.length > 0 && (
+          <div className="min-w-[259px] w-max p-4 xl:h-max xl:px-5 border-r xl:py-4 border-themeStroke">
+            <div className="flex items-center justify-between">
+              {selectedFrameworks.map((framework) => `${framework}, `)}
+              <X
+                className="w-[12px] h-[12px] xl:w-[16px] xl:h-[16px] ml-10 cursor-pointer"
+                onClick={() => setSelectedFrameworks([])}
+              />
+            </div>
           </div>
-           </div>
-         }
-       
+        )}
+
         {/* Open file content */}
         <div className="h-full flex w-full ">
           <div className=" p-10 flex-1 h- border-t border-r border-themeStroke overflow-y-scroll gutter-scrollbar">
-            <div className="grid grid-cols-3 gap-7">
-              {
-                filteredProjects.map((project, index) => (
-                  <ProjectCard
-                    key={index}
-                    title={`_${project.name}`}
-                    projectNumber={(index + 1).toString()}
-                    description={project.description}
-                    imageSrc={project.imageUrl}
-                    icon={frameworks.find(fw => fw.name === project.framework[0])?.icon || <File size={24} />}
-                    onViewProject={() => window.open(project.link, "_blank")}
-                  />
-                ))
-              }
+            <div className="grid grid-cols-2 xl:grid-cols-3 gap-7">
+              {filteredProjects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  title={`_${project.name}`}
+                  projectNumber={(index + 1).toString()}
+                  description={project.description}
+                  imageSrc={project.imageUrl}
+                  icon={
+                    frameworks.find((fw) => fw.name === project.framework[0])
+                      ?.icon || <File size={24} />
+                  }
+                  onViewProject={() => window.open(project.link, "_blank")}
+                />
+              ))}
             </div>
           </div>
           {/* Scroll bar */}

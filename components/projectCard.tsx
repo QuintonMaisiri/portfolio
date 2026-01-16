@@ -35,7 +35,7 @@ export default function ProjectCard({
         </div>
 
         {/* Content */}
-        <div className="p-[32px] flex flex-col gap-3 border-t border-t-slate-800 justify-between flex-1">
+        <div className="p-5 xl:p-[32px] flex flex-col gap-3 border-t border-t-slate-800 justify-between flex-1">
           <p className="text-[#c0c0d0] text-[18px]">{description}</p>
 
           <button
