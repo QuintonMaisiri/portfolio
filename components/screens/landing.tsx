@@ -28,8 +28,8 @@ export default function Landing() {
 };
 
   return (
-    <div className="flex items-center justify-center w-full h-full px-6">
-      <div className="space-y-10 w-[500px]">
+    <div className="flex flex-col lg:flex-row items-center justify-center w-full h-full px-6">
+      <div className="space-y-10 lg:w-[500px]">
         <div className="space-y-4">
           <p>Hi all. I am</p>
           <h1 className="text-white">Quinton T Maisiri</h1>
@@ -51,15 +51,15 @@ export default function Landing() {
           </p>
         </div>
       </div>
-      <div className="relative">
+      <div className="lg:relative">
         <Image
           src="/images/blurs.png"
           alt="blurs"
-          width={780}
-          height={742}
-          className="absolute"
+          width={750}
+          height={700}
+          className="absolute -translate-x-1/2 lg:translate-x-0 lg:translate-y-0 -translate-y-[50vh]"
         />
-        <div className="flex relative p-[32px] gap-[32px] border border-[#314158] rounded-[8px] bg-gradient-to-br from-[#175553] to-[#43D9AD]/13 backdrop-blur-sm w-max">
+        <div className="hidden lg:flex flex relative p-[32px] gap-[32px] border border-[#314158] rounded-[8px] bg-gradient-to-br from-[#175553] to-[#43D9AD]/13 backdrop-blur-sm w-max">
           <div className="absolute top-2 left-2 object-cover ">
             <div className="relative h-[14px] w-[14px] rounded-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.25),rgba(0,0,0,0.15)_70%)] shadow-[0_0_60px_rgba(80,255,220,0.25)]">
               <div

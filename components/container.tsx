@@ -140,7 +140,7 @@ export default function Container({ children }: { children: React.ReactNode }) {
               </Link>
             </div>
           </div>
-          <div className="lg:border-l border-l-themeStroke py-5 px-7 ">
+          <div className="lg:border-l border-l-themeStroke border-r border-r-themeStroke py-5 px-7 ">
             <Link
               href="https://github.com/QuintonMaisiri2"
               target="_blank"
