@@ -1,3 +1,4 @@
+"use client";
 import {
   ChevronDown,
   ChevronRight,
@@ -23,6 +24,7 @@ export default function Contact() {
     message: "",
   });
   const [sent, setSent] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const formIsValid = () => {
     return (
@@ -32,160 +34,261 @@ export default function Contact() {
     );
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const response = await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      setSent(true);
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      // Handle error
+      console.error("Failed to send email");
+    }
+  };
+
   return (
-    <div className="w-full h-full flex">
-      {/* Nav section */}
-      <div className="flex w-[286px] xl:w-[312px] border-r border-themeStroke">
-        <div className="h-full w-full ">
-          <div className="px-7 py-4 flex items-center gap-2 border-b border-themeStroke mb-2 w-[286px] xl:w-[312px]">
-            <Image
-              src="/images/chevronDown.png"
-              alt="chevron down"
-              width={16}
-              height={16}
-            />
-            contacts
+    <div className="h-full w-full">
+      {/* mobile version */}
+
+      <div className="lg:hidden flex flex-col h-[82vh] w-full overflow-y-hidden">
+        {/*  Navigation */}
+        <div>
+          <div className="p-5 text-white">
+            <p>_contact-me</p>
           </div>
-          <div className="px-7 py-2 flex items-center gap-2 text-sm">
-            <Mail className="w-[14px]" /> maisiriquinton@gmail.com
-          </div>
-          <div className="px-7 py-2 pt-1 flex items-center gap-2 text-sm">
-            <Phone className="w-[14px]" /> +263 776 441 883
+          <div className="space-y-2">
+            <div>
+              <div
+                onClick={() => setOpen(!open)}
+                className="bg-slate-700 text-slate-50 p-5 flex gap-4"
+              >
+                <ChevronRight
+                  className={`w-5 ${open && "rotate-90"} transition-transform`}
+                />
+                contacts
+              </div>
+              <div className={`${open ? "block" : "hidden"}`}>
+                <div className="px-5 py-2 flex items-center gap-4 text-sm">
+                  <Mail className="w-[14px]" /> maisiriquinton@gmail.com
+                </div>
+                <div className="px-5 py-2 pt-1 flex items-center gap-4 text-sm">
+                  <Phone className="w-[14px]" /> +263 776 441 883
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        {/*  Displayed content */}
+          <div className="p-[24px]">
+                {sent ? (
+                  <div className="flex items-center justify-center h-full">
+                    <ThankYou sendNewMessage={() => setSent(false)} />
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input
+                      label="_name"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                    />
+                    <Input
+                      label="_email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                    />
+                    <Textarea
+                      label="_message"
+                      value={formData.message}
+                      placeholder="your message here..."
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
+                    />
+                    <button
+                      type="submit"
+                      className={`mt-2 px-[12px] py-[10px] text-sm w-max rounded-lg transition ${
+                        !formIsValid()
+                          ? "opacity-50 bg-slate-600 cursor-not-allowed text-white"
+                          : "bg-primary cursor-pointer text-themeBackdrop"
+                      }`}
+                      disabled={!formIsValid()}
+                    >
+                      submit-message
+                    </button>
+                  </form>
+                )}
+              </div>
       </div>
 
-      {/* Displayed Content */}
-      <div className="h-full flex flex-col flex-1">
-        {/* Open file name container */}
-        <div className="w-full h-max px-5 border-r py-4 border-themeStroke ">
-          <div className="flex items-center justify-between text-themeBg">
-            contact
+      {/* Desktop version */}
+
+      <div className="w-full h-full lg:flex hidden">
+        {/* Nav section */}
+        <div className="flex w-[286px] xl:w-[312px] border-r border-themeStroke">
+          <div className="h-full w-full ">
+            <div className="px-7 py-4 flex items-center gap-2 border-b border-themeStroke mb-2 w-[286px] xl:w-[312px]">
+              <Image
+                src="/images/chevronDown.png"
+                alt="chevron down"
+                width={16}
+                height={16}
+              />
+              contacts
+            </div>
+            <div className="px-7 py-2 flex items-center gap-2 text-sm">
+              <Mail className="w-[14px]" /> maisiriquinton@gmail.com
+            </div>
+            <div className="px-7 py-2 pt-1 flex items-center gap-2 text-sm">
+              <Phone className="w-[14px]" /> +263 776 441 883
+            </div>
           </div>
         </div>
-        {/* Open file content */}
-        <div className="h-full w-full flex">
-          <div className="w-1/3 p-4 xl:px-8 xl:py-4 xl:w-2/5 h-full border-t border-r border-themeStroke">
-            <div className="flex items-center justify-center h-full w-full">
-              {sent ? (
-                <ThankYou />
-              ) : (
-                <form action="" className="space-y-4">
-                  <Input
-                    label="_name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                  />
-                  <Input
-                    label="_email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
-                  <Textarea
-                    label="_message"
-                    value={formData.message}
-                    placeholder="your message here..."
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                  />
-                  <button
-                    type="submit"
-                    className={`mt-2 px-[12px] py-[10px] text-sm w-max rounded-lg transition ${
-                      !formIsValid()
-                        ? "opacity-50 bg-slate-600 cursor-not-allowed text-white"
-                        : "bg-primary cursor-pointer text-themeBackdrop"
-                    }`}
-                    disabled={!formIsValid()}
-                  >
-                    submit-message
-                  </button>
-                </form>
-              )}
+
+        {/* Displayed Content */}
+        <div className="h-full flex flex-col flex-1">
+          {/* Open file name container */}
+          <div className="w-full h-max px-5 border-r py-4 border-themeStroke ">
+            <div className="flex items-center justify-between text-themeBg">
+              contact
             </div>
           </div>
-
-          {/* Code snippet showcase */}
-          <div className="flex-1 p-4 xl:px-8 xl:py-4 xl:w-3/5 h-full border-t border-r border-themeStroke overflow-x-scroll ">
-            <div className="flex">
-              {/* Line numbers */}
-              <div className="text-[#64748b] text-right pr-6 select-none">
-                {Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i}>{i + 1}</div>
-                ))}
-              </div>
-
-              <div className="">
-                <pre >
-                  <code>
-                    <Purple text="const " />
-                    <Indigo text="button " />
-                    <Purple text="= " />
-                    <Purple text="document" />
-                    .<Purple text="querySelector" />
-                    {"("}
-                    <Orange text="'#sendBtn'" />
-                    {");"}
-                    {"\n\n"}
-                    <Purple text="const " />
-                    <Indigo text="message " />
-                    <Purple text="= " />
-                    {"{"}
-                    {"\n"}
-                    {"  "}
-                    <Indigo text="name" />
-                    <Purple text=": " />
-                    <Orange text={formData.name || '""'} />
-                    {","}
-                    {"\n"}
-                    {"  "}
-                    <Indigo text="email" />
-                    <Purple text=": " />
-                    <Orange text={formData.email || '""'} />
-                    {","}
-                    {"\n"}
-                    {"  "}
-                    <Indigo text="message" />
-                    <Purple text=": " />
-                    <Orange text={formData.message || '""'} />
-                    {","}
-                    {"\n"}
-                    {"  "}
-                    <Indigo text="date" />
-                    <Purple text=": " />
-                    <Orange text={new Date().toDateString()} />
-                    {"\n"}
-                    {"}"}
-                    {"\n\n"}
-                    <Indigo text="button" />
-                    .<Purple text="addEventListener" />
-                    {"("}
-                    <Orange text="'click'" />
-                    {", "}
-                    {"() => {"}
-                    {"\n"}
-                    {"  "}
-                    <Indigo text="form" />
-                    .<Purple text="send" />
-                    {"("}
-                    <Indigo text="message" />
-                    {");"}
-                    {"\n"}
-                    {"})"}
-                    {")"}
-                  </code>
-                </pre>
+          {/* Open file content */}
+          <div className="h-full w-full flex">
+            <div className="w-1/3 p-4 xl:px-8 xl:py-4 xl:w-2/5 h-full border-t border-r border-themeStroke">
+              <div className="flex items-center justify-center h-full w-full">
+                {sent ? (
+                  <ThankYou  sendNewMessage={() => setSent(false)} />
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input
+                      label="_name"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                    />
+                    <Input
+                      label="_email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                    />
+                    <Textarea
+                      label="_message"
+                      value={formData.message}
+                      placeholder="your message here..."
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value })
+                      }
+                    />
+                    <button
+                      type="submit"
+                      className={`mt-2 px-[12px] py-[10px] text-sm w-max rounded-lg transition ${
+                        !formIsValid()
+                          ? "opacity-50 bg-slate-600 cursor-not-allowed text-white"
+                          : "bg-primary cursor-pointer text-themeBackdrop"
+                      }`}
+                      disabled={!formIsValid()}
+                    >
+                      submit-message
+                    </button>
+                  </form>
+                )}
               </div>
             </div>
-          </div>
 
-          <div className="h-full border-t border-r w-[20px] xl:w-[32px] border-themeStroke p-2 pt-4">
-            <div className="bg-themeStroke w-full h-2 mx-auto"></div>
+            {/* Code snippet showcase */}
+            <div className="flex-1 p-4 xl:px-8 xl:py-4 xl:w-3/5 h-full border-t border-r border-themeStroke overflow-x-scroll no-scrollbar">
+              <div className="flex">
+                {/* Line numbers */}
+                <div className="text-[#64748b] text-right pr-6 select-none">
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div key={i}>{i + 1}</div>
+                  ))}
+                </div>
+
+                <div className="">
+                  <pre>
+                    <code>
+                      <Purple text="const " />
+                      <Indigo text="button " />
+                      <Purple text="= " />
+                      <Purple text="document" />
+                      .<Purple text="querySelector" />
+                      {"("}
+                      <Orange text="'#sendBtn'" />
+                      {");"}
+                      {"\n\n"}
+                      <Purple text="const " />
+                      <Indigo text="message " />
+                      <Purple text="= " />
+                      {"{"}
+                      {"\n"}
+                      {"  "}
+                      <Indigo text="name" />
+                      <Purple text=": " />
+                      <Orange text={formData.name || '""'} />
+                      {","}
+                      {"\n"}
+                      {"  "}
+                      <Indigo text="email" />
+                      <Purple text=": " />
+                      <Orange text={formData.email || '""'} />
+                      {","}
+                      {"\n"}
+                      {"  "}
+                      <Indigo text="message" />
+                      <Purple text=": " />
+                      <Orange text={formData.message || '""'} />
+                      {","}
+                      {"\n"}
+                      {"  "}
+                      <Indigo text="date" />
+                      <Purple text=": " />
+                      <Orange text={new Date().toDateString()} />
+                      {"\n"}
+                      {"}"}
+                      {"\n\n"}
+                      <Indigo text="button" />
+                      .<Purple text="addEventListener" />
+                      {"("}
+                      <Orange text="'click'" />
+                      {", "}
+                      {"() => {"}
+                      {"\n"}
+                      {"  "}
+                      <Indigo text="form" />
+                      .<Purple text="send" />
+                      {"("}
+                      <Indigo text="message" />
+                      {");"}
+                      {"\n"}
+                      {"})"}
+                      {")"}
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
+
+            <div className="h-full border-t border-r w-[20px] xl:w-[32px] border-themeStroke p-2 pt-4">
+              <div className="bg-themeStroke w-full h-2 mx-auto"></div>
+            </div>
           </div>
         </div>
       </div>
